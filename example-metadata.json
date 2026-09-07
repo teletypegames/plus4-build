@@ -1,0 +1,10 @@
+{
+  "name": "example",
+  "title": "Example Plus/4 Game",
+  "author": "Teletype Games",
+  "desc": "Short description of the game.",
+  "site": "https://git.teletypegames.org/games/example",
+  "repo": "https://git.teletypegames.org/games/example",
+  "license": "MIT",
+  "version": "1.0.0"
+}
