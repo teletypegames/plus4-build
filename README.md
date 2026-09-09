@@ -8,7 +8,7 @@ load address (`$1001`) and the TED registers differ.
 - `example-makefile.make` — project Makefile: local dev targets
   (`deps`, `build`, `run`, `clear`, `rebuild`, `rebuildrun`).
 - `example-woodpecker.yaml` — a one-line marker (`platform: plus4`): the
-  full pipeline (version → build → artifact → publish) is served by the update server's Woodpecker
+  full pipeline (version → build → package → artifact → publish) is served by the update server's Woodpecker
   configuration extension — preview it with
   `curl "https://teletypegames.org/build/config?platform=plus4"`.
 - `example-metadata.json` — catalog metadata; the `version` field drives
@@ -56,7 +56,18 @@ docker build --platform linux/amd64 -f builder.Dockerfile \
 docker push git.teletypegames.org/build/plus4-builder:latest
 ```
 
-The served pipeline uploads `$(PROJECT)-$(VERSION).prg` and
-`$(PROJECT)-$(VERSION).metadata.json` via `/build/upload`, then triggers
+## Player image
+
+The pipeline's `package` step runs in `git.teletypegames.org/build/commodore-player`,
+which lives in [c64-tools](../c64-tools) (`player.Dockerfile`) and serves both
+platforms: `commodore-pack plus4 <name> <version>` wraps the `.prg` into an
+EmulatorJS browser player (`vice_xplus4` core) and into yapeSDL bundles for
+linux-x64, win-x64 and mac-universal, whose launchers set yapeSDL to Plus/4
+mode (`EmulationLevel = 0`) before autostarting the program.
+
+The served pipeline builds the `.prg`, runs `commodore-pack`, uploads
+`$(PROJECT)-$(VERSION).prg`, `.metadata.json`, `.html.zip`, `-linux-x64.zip`,
+`-win-x64.zip` and `-mac-universal.zip` via `/build/upload`, then triggers
 `/build/publish?platform=plus4&name=$(PROJECT)&version=$(VERSION)`, which
-creates/updates the Software row and a Release with `cartridge_path`.
+creates/updates the Software row and a Release with the `cartridge`, `html`,
+`win_x64`, `linux_x64` and `mac_universal` assets.
