@@ -62,12 +62,12 @@ The pipeline's `package` step runs in `git.teletypegames.org/build/commodore-pla
 which lives in [c64-tools](../c64-tools) (`player.Dockerfile`) and serves both
 platforms: `commodore-pack plus4 <name> <version>` wraps the `.prg` into an
 EmulatorJS browser player (`vice_xplus4` core) and into yapeSDL bundles for
-linux-x64, win-x64 and mac-universal, whose launchers set yapeSDL to Plus/4
+linux-x64, win-x64 and mac-arm64 (Apple Silicon), whose launchers set yapeSDL to Plus/4
 mode (`EmulationLevel = 0`) before autostarting the program.
 
 The served pipeline builds the `.prg`, runs `commodore-pack`, uploads
 `$(PROJECT)-$(VERSION).prg`, `.metadata.json`, `.html.zip`, `-linux-x64.zip`,
-`-win-x64.zip` and `-mac-universal.zip` via `/build/upload`, then triggers
+`-win-x64.zip` and `-mac-arm64.zip` via `/build/upload`, then triggers
 `/build/publish?platform=plus4&name=$(PROJECT)&version=$(VERSION)`, which
 creates/updates the Software row and a Release with the `cartridge`, `html`,
-`win_x64`, `linux_x64` and `mac_universal` assets.
+`win_x64`, `linux_x64` and `mac_arm64` assets.
