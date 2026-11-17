@@ -18,6 +18,12 @@ load address (`$1001`) and the TED registers differ.
   external link).
 - `example-tasks.json` — VS Code `.vscode/tasks.json` wrapping the local
   make targets.
+- `hello/main.asm` — a Hello World: clears the screen and prints `HELLO WORLD`.
+- `warp-template.json` — what *WarpEngine: New Game* in the WarpEngine Toolbox
+  copies from this repo: the Makefile, the VS Code tasks and `hello/main.asm` as
+  `main.asm`, so a new project builds (`make build`, or the served pipeline's
+  `acme -f cbm -o <name>.prg main.asm`) and runs (`make run`, xplus4) right away.
+  The toolbox writes the marker, `metadata.json` and `README.md` itself.
 
 ## Usage in a game repo
 
