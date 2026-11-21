@@ -16,14 +16,28 @@ load address (`$1001`) and the TED registers differ.
   `repo`, `license`) is what `WarpEngine::Platforms::Plus4::Service` writes into
   the DB (`site` becomes the "Source Code", `repo` the "Repository"
   external link).
-- `example-tasks.json` — VS Code `.vscode/tasks.json` wrapping the local
-  make targets.
+- `example-tasks.json` — VS Code `.vscode/tasks.json`: the make targets as
+  `warpengine` tasks (`build`, `clear`, `rebuild`, and `run (VICE)` in a local
+  `xplus4`).
 - `hello/main.asm` — a Hello World: clears the screen and prints `HELLO WORLD`.
 - `warp-template.json` — what *WarpEngine: New Game* in the WarpEngine Toolbox
   copies from this repo: the Makefile, the VS Code tasks and `hello/main.asm` as
   `main.asm`, so a new project builds (`make build`, or the served pipeline's
   `acme -f cbm -o <name>.prg main.asm`) and runs (`make run`, xplus4) right away.
   The toolbox writes the marker, `metadata.json` and `README.md` itself.
+
+## Dev container
+
+`warp-template.json` has a `devcontainer` key that the WarpEngine Toolbox reads
+(an older toolbox ignores it): a new project gets `.devcontainer/` from
+`example-devcontainer.json` and `example-devcontainer.Dockerfile` — the CI
+builder image the host names (`{builderImage}`) plus git and a `dev` user —
+so a computer with only Docker builds with the same toolchain as the pipeline.
+The tasks of `example-devcontainer-tasks.json` are merged into
+`.vscode/tasks.json`: `dev image` builds the container image, `play` builds the
+game and plays it in the host's web runtime. VICE is not in the container: `run (VICE)` builds there and runs the build in a local `xplus4`.
+For an existing game repo, *WarpEngine: Add Dev Container* adds it and merges
+the tasks, keeping yours.
 
 ## Usage in a game repo
 

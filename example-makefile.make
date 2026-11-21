@@ -20,7 +20,9 @@ VERSION_FILE = .version
 all: build
 
 deps:
-ifeq ($(UNAME_S),Darwin)
+ifdef WARPENGINE_DEVCONTAINER
+	@echo "In the dev container: ACME is installed already."
+else ifeq ($(UNAME_S),Darwin)
 	@command -v brew >/dev/null 2>&1 || { echo "Homebrew kell ehhez. Telepitsd: https://brew.sh"; exit 1; }
 	brew install acme vice
 else
