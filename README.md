@@ -36,6 +36,7 @@ so a computer with only Docker builds with the same toolchain as the pipeline.
 The tasks of `example-devcontainer-tasks.json` are merged into
 `.vscode/tasks.json`: `dev image` builds the container image, `play` builds the
 game and plays it in the host's web runtime. VICE is not in the container: `run (VICE)` builds there and runs the build in a local `xplus4`.
+The container editor gets its extensions from `example-devcontainer.json`: the WarpEngine Toolbox, Makefile Tools (its configure prompts off; the Toolbox tasks build) and the ACME cross-assembler extension.
 For an existing game repo, *WarpEngine: Add Dev Container* adds it and merges
 the tasks, keeping yours.
 
