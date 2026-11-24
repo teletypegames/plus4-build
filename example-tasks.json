@@ -8,9 +8,9 @@
       "group": { "kind": "build", "isDefault": true }
     },
     {
-      "label": "clear",
+      "label": "clean",
       "type": "warpengine",
-      "target": "clear"
+      "target": "clean"
     },
     {
       "label": "rebuild",
