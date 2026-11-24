@@ -39,6 +39,8 @@ $(TARGET): $(SRCS)
 run: build
 	$(EMU) $(TARGET)
 
+check: build
+
 clean:
 	rm -f $(TARGET) $(PROJECT)-*.prg $(PROJECT)-*.metadata.json $(VERSION_FILE)
 
@@ -46,4 +48,4 @@ rebuild: clean build
 
 rebuildrun: clean build run
 
-.PHONY: all deps build run clean rebuild rebuildrun
+.PHONY: all deps build run check clean rebuild rebuildrun

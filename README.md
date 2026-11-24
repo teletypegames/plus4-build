@@ -5,13 +5,14 @@ spirit as [c64-tools](../c64-tools): the Plus/4 shares the C64's 6502 core, so
 the toolchain is the same ACME assembler — only the emulator (`xplus4`), the
 load address (`$1001`) and the TED registers differ.
 
-- `example-makefile.make` — project Makefile: local dev targets
-  (`deps`, `build`, `run`, `clean`, `rebuild`, `rebuildrun`).
-- `example-woodpecker.yaml` — a one-line marker (`platform: plus4`): the
-  full pipeline (version → build → package → artifact → publish) is served by the update server's Woodpecker
+- `example-makefile.make` — project Makefile: the shared targets
+  (`build`, `run`, `check`, `clean`, see below) plus `deps`, `rebuild`,
+  `rebuildrun`.
+- `.woodpecker.yaml` (written by New Game, not kept here) — a one-line
+  marker (`platform: plus4`): the full pipeline (version → build → package → artifact → publish) is served by the update server's Woodpecker
   configuration extension — preview it with
   `curl "https://teletypegames.org/build/config?platform=plus4"`.
-- `example-metadata.json` — catalog metadata; the `version` field drives
+- `metadata.json` (written by New Game, not kept here) — catalog metadata; the `version` field drives
   the pipeline's version step, the rest (`name`, `title`, `author`, `desc`, `site`,
   `repo`, `license`) is what `WarpEngine::Platforms::Plus4::Service` writes into
   the DB (`site` becomes the "Source Code", `repo` the "Repository"
@@ -40,13 +41,21 @@ The container editor gets its extensions from `example-devcontainer.json`: the W
 For an existing game repo, *WarpEngine: Add Dev Container* adds it and merges
 the tasks, keeping yours.
 
+## Makefile contract
+
+The Makefile has the targets every WarpEngine template shares: `build`, `run`, `check` (the CI's check step runs it in the builder image),
+`clean`. `warp-engine check makefile` of the
+[WarpEngine CLI](https://wiki.teletypegames.org/godoc/warp-engine-cli/latest/cmd/warp-engine/)
+checks a project against it. `check` assembles the program; the web version is the
+`.prg` in the host's EmulatorJS runtime, so there is no `web` target.
+
 ## Usage in a game repo
 
 1. Copy `example-makefile.make` to `Makefile`, set `PROJECT` (and
    `TARGET` if the .prg name differs from `$(PROJECT).prg`).
-2. Copy `example-metadata.json` to `metadata.json` and fill it in;
+2. Create `metadata.json` (the keys above) and fill it in;
    `name` must match `PROJECT`.
-3. Copy `example-woodpecker.yaml` to `.woodpecker.yaml` (a one-line marker — the
+3. Create `.woodpecker.yaml` with the line `platform: plus4` (a one-line marker — the
    pipeline itself is served by the update server; add `name:` when the
    software name differs from the repo name) and add the
    `application_token` secret in Woodpecker (an ApplicationToken with
