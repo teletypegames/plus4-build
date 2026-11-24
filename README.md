@@ -6,7 +6,7 @@ the toolchain is the same ACME assembler — only the emulator (`xplus4`), the
 load address (`$1001`) and the TED registers differ.
 
 - `example-makefile.make` — project Makefile: local dev targets
-  (`deps`, `build`, `run`, `clear`, `rebuild`, `rebuildrun`).
+  (`deps`, `build`, `run`, `clean`, `rebuild`, `rebuildrun`).
 - `example-woodpecker.yaml` — a one-line marker (`platform: plus4`): the
   full pipeline (version → build → package → artifact → publish) is served by the update server's Woodpecker
   configuration extension — preview it with
@@ -17,7 +17,7 @@ load address (`$1001`) and the TED registers differ.
   the DB (`site` becomes the "Source Code", `repo` the "Repository"
   external link).
 - `example-tasks.json` — VS Code `.vscode/tasks.json`: the make targets as
-  `warpengine` tasks (`build`, `clear`, `rebuild`, and `run (VICE)` in a local
+  `warpengine` tasks (`build`, `clean`, `rebuild`, and `run (VICE)` in a local
   `xplus4`).
 - `hello/main.asm` — a Hello World: clears the screen and prints `HELLO WORLD`.
 - `warp-template.json` — what *WarpEngine: New Game* in the WarpEngine Toolbox
